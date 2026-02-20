@@ -12,6 +12,7 @@ This project is Docker-free and deploys with native Node builds.
    - healthcheck: `/api/v1/health/live`
 4. Add all backend env vars from `backend/.env.example`.
    - Optional observability: set `SENTRY_DSN` to enable error tracking.
+   - If you use Vercel preview URLs, set `CORS_ALLOWED_ORIGINS` as comma-separated origins.
 5. Set `FRONTEND_URL` to your Vercel production domain.
 6. Set `NODE_ENV=production`.
 7. Run migrations against production DB:
@@ -34,6 +35,8 @@ This project is Docker-free and deploys with native Node builds.
 ## 3. Post-Deploy URL Updates
 
 1. Update Railway `FRONTEND_URL` to exact Vercel domain.
+   - Example: `https://crm-ai-one.vercel.app`
+   - Optional previews: `CORS_ALLOWED_ORIGINS=https://crm-ai-one-git-main-<team>.vercel.app,https://crm-ai-one-<branch>-<team>.vercel.app`
 2. Update n8n callback target to:
    - `https://<railway-domain>/api/v1/webhooks/n8n-callback`
 3. Update Meta webhook callback URLs:

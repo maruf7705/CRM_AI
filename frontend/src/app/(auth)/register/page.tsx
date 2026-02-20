@@ -17,6 +17,10 @@ const getErrorMessage = (error: unknown): string => {
     if (typeof message === "string") {
       return message;
     }
+
+    if (typeof error.message === "string" && error.message.trim().length > 0) {
+      return error.message;
+    }
   }
 
   return "Registration failed. Please try again.";
