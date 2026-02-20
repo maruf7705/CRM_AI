@@ -1,0 +1,79 @@
+{
+  "name": "OmniDesk AI Reply",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "ai-reply",
+        "httpMethod": "POST",
+        "responseMode": "lastNode"
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "operation": "create",
+        "model": "gpt-4o",
+        "messages": "={{ [\n  { role: 'system', content: $json.systemPrompt || 'You are a helpful assistant.' },\n  ...(Array.isArray($json.conversationHistory) ? $json.conversationHistory : []),\n  { role: 'user', content: $json.incomingMessage || '' }\n] }}"
+      },
+      "id": "openai-chat",
+      "name": "OpenAI Chat",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        540,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.callbackUrl }}",
+        "method": "POST",
+        "jsonParameters": true,
+        "sendBody": true,
+        "bodyParametersJson": "={{ {\n  organizationId: $json.organizationId,\n  conversationId: $json.conversationId,\n  aiResponse: $json.choices?.[0]?.message?.content || '',\n  model: $json.model,\n  tokensUsed: $json.usage?.total_tokens\n} }}",
+        "headerParametersJson": "={{ {\n  'x-n8n-callback-secret': $json.callbackSecret || ''\n} }}"
+      },
+      "id": "callback-request",
+      "name": "POST Callback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        860,
+        240
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat": {
+      "main": [
+        [
+          {
+            "node": "POST Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false
+}

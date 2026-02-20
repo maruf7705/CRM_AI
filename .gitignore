@@ -1,0 +1,17 @@
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.DS_Store
+.env
+.env.local
+.env.*.local
+frontend/.env.local
+backend/.env
+dist
+.next
+coverage
+*.tsbuildinfo
+.vercel
+CRM_AI/

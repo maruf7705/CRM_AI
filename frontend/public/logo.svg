@@ -1,0 +1,5 @@
+﻿<svg width="180" height="40" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="40" height="40" rx="10" fill="#6366F1"/>
+  <path d="M12 28V12H20.5C25.2 12 28 14.5 28 19C28 23.5 25.2 28 20.5 28H12Z" fill="white"/>
+  <text x="50" y="26" fill="#0F172A" font-size="18" font-family="Arial, sans-serif" font-weight="700">OmniDesk AI</text>
+</svg>
