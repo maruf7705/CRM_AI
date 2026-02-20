@@ -35,6 +35,7 @@ if (!parsed.success) {
   const issues = parsed.error.issues
     .map((issue) => `${issue.path.join(".") || "env"}: ${issue.message}`)
     .join("; ");
+  console.error("❌ Missing/invalid environment variables:", issues);
   throw new Error(`Invalid environment variables: ${issues}`);
 }
 
