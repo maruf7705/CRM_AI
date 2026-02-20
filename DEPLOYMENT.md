@@ -11,6 +11,7 @@ This project is Docker-free and deploys with native Node builds.
    - start command: `npm run start`
    - healthcheck: `/api/v1/health/live`
 4. Add all backend env vars from `backend/.env.example`.
+   - Optional observability: set `SENTRY_DSN` to enable error tracking.
 5. Set `FRONTEND_URL` to your Vercel production domain.
 6. Set `NODE_ENV=production`.
 7. Run migrations against production DB:

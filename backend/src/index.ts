@@ -2,6 +2,9 @@ import { app } from "./app";
 import { env } from "./config/env";
 import { logger } from "./config/logger";
 import { prisma } from "./config/prisma";
+import { captureException, flushSentry, initSentry } from "./config/sentry";
+
+initSentry();
 
 const server = app.listen(env.PORT, () => {
   logger.info(`OmniDesk backend running on port ${env.PORT}`);
@@ -40,10 +43,16 @@ process.on("SIGTERM", () => {
 
 process.on("uncaughtException", (error) => {
   logger.error("Uncaught exception", { error: error.message, stack: error.stack });
-  process.exit(1);
+  captureException(error, { code: "UNCAUGHT_EXCEPTION" });
+  void flushSentry().finally(() => {
+    process.exit(1);
+  });
 });
 
 process.on("unhandledRejection", (reason) => {
   logger.error("Unhandled rejection", { reason });
-  process.exit(1);
+  captureException(reason, { code: "UNHANDLED_REJECTION" });
+  void flushSentry().finally(() => {
+    process.exit(1);
+  });
 });

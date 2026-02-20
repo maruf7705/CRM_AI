@@ -1,6 +1,7 @@
 import type { ErrorRequestHandler } from "express";
 import { env } from "../config/env";
 import { logger } from "../config/logger";
+import { captureException } from "../config/sentry";
 import { AppError } from "../utils/errors";
 
 export const errorHandlerMiddleware: ErrorRequestHandler = (error, req, res, _next) => {
@@ -20,6 +21,18 @@ export const errorHandlerMiddleware: ErrorRequestHandler = (error, req, res, _ne
     stack: error instanceof Error ? error.stack : undefined,
     details: appError?.details,
   });
+
+  if (statusCode >= 500) {
+    captureException(error, {
+      requestId: req.requestId,
+      method: req.method,
+      path: req.originalUrl,
+      userId: req.auth?.userId,
+      organizationId: req.auth?.organizationId,
+      statusCode,
+      code,
+    });
+  }
 
   res.status(statusCode).json({
     success: false,
