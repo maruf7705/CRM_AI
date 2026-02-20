@@ -2,7 +2,7 @@
 
 This project is Docker-free and deploys with native Node builds.
 
-## 1. Deploy Backend to Railway
+## 1. Deploy Backend to Railway  
 
 1. Create a new Railway project.
 2. Connect the repository and set root directory to `backend`.
