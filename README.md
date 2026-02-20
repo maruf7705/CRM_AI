@@ -47,7 +47,8 @@ npm run dev
 ```
 
 ## Health Check
-- Backend: `GET http://localhost:4000/api/v1/health`
+- Liveness (for Railway deploy): `GET http://localhost:4000/api/v1/health/live`
+- Readiness (checks DB/Redis/Supabase): `GET http://localhost:4000/api/v1/health`
 
 ## Deployment
 - Frontend -> Vercel (`frontend` root)

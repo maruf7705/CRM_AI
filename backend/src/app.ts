@@ -87,6 +87,16 @@ app.use(requestLoggerMiddleware);
 app.use(sanitizeInputMiddleware);
 app.use("/api/v1", mutationRateLimiter);
 
+app.get("/api/v1/health/live", (_req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    data: {
+      status: "alive",
+      timestamp: new Date().toISOString(),
+    },
+  });
+});
+
 app.get("/api/v1/health", async (_req: Request, res: Response) => {
   try {
     const payload = await buildHealthPayload();
