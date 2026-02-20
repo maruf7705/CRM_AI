@@ -61,3 +61,11 @@ This validates:
 3. Webhooks: send provider test events and verify conversation/message creation.
 4. AI flow: inbound message -> AI processing -> callback -> outbound message.
 5. Analytics and contacts pages load with production data.
+
+## 6. Backup and Recovery
+
+1. Backup runbook: `BACKUP_RECOVERY.md`
+2. Create backup from repo root:
+   - `npm run backup:create`
+3. Verify dump file:
+   - `npm run backup:verify -- backups/<file>.dump`

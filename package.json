@@ -16,7 +16,10 @@
     "dev:frontend": "npm run dev --workspace frontend",
     "build": "npm run build --workspace backend && npm run build --workspace frontend",
     "start": "npm run start --workspace backend",
-    "verify:production": "node scripts/production-verify.mjs"
+    "verify:production": "node scripts/production-verify.mjs",
+    "backup:create": "node scripts/db-backup.mjs",
+    "backup:verify": "node scripts/db-backup-verify.mjs",
+    "backup:restore": "node scripts/db-restore.mjs"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

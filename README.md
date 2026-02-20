@@ -61,7 +61,15 @@ npm run dev
 - Railway Procfile fallback: `backend/Procfile`
 - Vercel config: `frontend/vercel.json`
 - Runbook: `DEPLOYMENT.md`
+- Backup/Recovery runbook: `BACKUP_RECOVERY.md`
 - Production smoke script:
   ```bash
   BACKEND_URL=https://<railway-domain> FRONTEND_URL=https://<vercel-domain> npm run verify:production
   ```
+
+## Backup Operations
+```bash
+npm run backup:create
+npm run backup:verify -- backups/<file>.dump
+npm run backup:restore -- backups/<file>.dump
+```
