@@ -16,6 +16,6 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm install
-      - run: npm run prisma:generate
+      - run: npm run prisma:generate --workspace backend
       - run: npm run build
-      - run: npm run test
+      - run: npm run test --workspaces --if-present
